@@ -1,0 +1,24 @@
+
+
+
+GO
+with DesignMenu
+(MenuId, MenuName, UrlPath, ParentMenuId,level)
+As 
+(
+	select MenuId, MenuName, UrlPath, ParentMenuId, 0 as level
+	from Design where menuid = 3
+
+	union all
+	
+	select D.MenuId, D.MenuName, D.UrlPath, D.ParentMenuId,  level+1 
+	from Design D Inner Join DesignMenu DM
+	on D.ParentMenuId = DM.MenuId
+)
+
+select MenuId, MenuName, UrlPath, ParentMenuId, level
+from DesignMenu where level <= 2;
+GO
+
+
+
